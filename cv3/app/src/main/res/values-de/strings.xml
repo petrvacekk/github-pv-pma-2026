@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="app_name">MyApp004Objednavka</string>
+
+    <string name="order_header">Schuhbestellung</string>
+    <string name="order_question">Welche Schuhe möchten Sie bestellen?</string>
+
+    <string name="shoe_on_1">On Cloudrunner</string>
+    <string name="shoe_on_2">On Cloudmonster 3 Hyper</string>
+    <string name="shoe_on_3">On Cloudmonster LightSpray</string>
+
+    <string name="extra_waterproofing">Imprägnierung</string>
+    <string name="extra_shoelaces">Zusätzliche Schnürsenkel</string>
+    <string name="extra_socks">On-Socken</string>
+
+    <string name="button_make_order_text">Bestellen</string>
+    <string name="textview_order_summary_text">Bestellübersicht</string>
+
+    <string name="order_summary_format">Bestellübersicht: %1$s</string>
+    <string name="order_item_separator">"; "</string>
+</resources>

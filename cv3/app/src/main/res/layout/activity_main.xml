@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="Objednávka bot"
+        android:text="@string/order_header"
         android:textAlignment="center"
         android:textColor="#F5E6CC"
         android:textSize="24sp"
@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="Jaké boty chcete objednat?"
+        android:text="@string/order_question"
         android:textAlignment="center"
         android:textColor="#F5E6CC"
         android:textSize="20sp"
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:buttonTint="#F5E6CC"
             android:checked="true"
-            android:text="On Cloudrunner"
+            android:text="@string/shoe_on_1"
             android:textColor="#F5E6CC" />
 
         <RadioButton
@@ -53,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:buttonTint="#F5E6CC"
-            android:text="On Cloudmonster 3 Hyper"
+            android:text="@string/shoe_on_2"
             android:textColor="#F5E6CC" />
 
         <RadioButton
@@ -61,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:buttonTint="#F5E6CC"
-            android:text="On Cloudmonster LightSpray"
+            android:text="@string/shoe_on_3"
             android:textColor="#F5E6CC" />
 
     </RadioGroup>
@@ -72,7 +72,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:buttonTint="#F5E6CC"
-        android:text="Impregnace"
+        android:text="@string/extra_waterproofing"
         android:textColor="#F5E6CC" />
 
     <CheckBox
@@ -81,7 +81,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:buttonTint="#F5E6CC"
-        android:text="Tkaničky navíc"
+        android:text="@string/extra_shoelaces"
         android:textColor="#F5E6CC" />
 
     <CheckBox
@@ -90,7 +90,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:buttonTint="#F5E6CC"
-        android:text="Ponožky On"
+        android:text="@string/extra_socks"
         android:textColor="#F5E6CC" />
 
     <Button
@@ -119,7 +119,6 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:src="@drawable/on_1"
-        android:scaleType="centerInside"
-        />
+        android:scaleType="centerInside" />
 
 </LinearLayout>
