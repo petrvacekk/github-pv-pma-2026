@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1E1E1E"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="24dp"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tvHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Objednávka bot"
+        android:textAlignment="center"
+        android:textColor="#F5E6CC"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvOrderTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Jaké boty chcete objednat?"
+        android:textAlignment="center"
+        android:textColor="#F5E6CC"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <RadioGroup
+        android:id="@+id/rgShoes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/rbOn1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="#F5E6CC"
+            android:checked="true"
+            android:text="On Cloudrunner"
+            android:textColor="#F5E6CC" />
+
+        <RadioButton
+            android:id="@+id/rbOn2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="#F5E6CC"
+            android:text="On Cloudmonster 3 Hyper"
+            android:textColor="#F5E6CC" />
+
+        <RadioButton
+            android:id="@+id/rbOn3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="#F5E6CC"
+            android:text="On Cloudmonster LightSpray"
+            android:textColor="#F5E6CC" />
+
+    </RadioGroup>
+
+    <CheckBox
+        android:id="@+id/cbFoam"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:buttonTint="#F5E6CC"
+        android:text="Impregnace"
+        android:textColor="#F5E6CC" />
+
+    <CheckBox
+        android:id="@+id/cbBootstrap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:buttonTint="#F5E6CC"
+        android:text="Tkaničky navíc"
+        android:textColor="#F5E6CC" />
+
+    <CheckBox
+        android:id="@+id/cbSocks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:buttonTint="#F5E6CC"
+        android:text="Ponožky On"
+        android:textColor="#F5E6CC" />
+
+    <Button
+        android:id="@+id/btnOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#F5E6CC"
+        android:text="@string/button_make_order_text"
+        android:textColor="#1E1E1E" />
+
+    <TextView
+        android:id="@+id/tvOrder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="#2C2C2C"
+        android:minHeight="100dp"
+        android:padding="16dp"
+        android:text="@string/textview_order_summary_text"
+        android:textColor="#F5E6CC"
+        android:textSize="16sp" />
+
+    <ImageView
+        android:id="@+id/ivShoe"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/on_1"
+        android:scaleType="centerInside"
+        />
+
+</LinearLayout>
