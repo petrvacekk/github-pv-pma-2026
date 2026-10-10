@@ -19,4 +19,10 @@
 
 <string name="order_summary_format">Order summary: %1$s</string>
 <string name="order_item_separator">"; "</string>
+
+    <string name="item_with_price">%1$s — %2$s</string>
+    <string name="total_price_label">Total price</string>
+    <string name="total_price_format">Total: %1$s</string>
+    <string name="order_summary_with_total">Order summary:\n%1$s\n\nTotal: %2$s</string>
+    <string name="order_line_separator">"\n"</string>
 </resources>

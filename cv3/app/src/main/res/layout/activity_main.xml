@@ -93,6 +93,18 @@
         android:text="@string/extra_socks"
         android:textColor="#F5E6CC" />
 
+    <TextView
+        android:id="@+id/tvTotal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/total_price_label"
+        android:textAlignment="center"
+        android:textColor="#F5E6CC"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
     <Button
         android:id="@+id/btnOrder"
         android:layout_width="wrap_content"

@@ -19,4 +19,10 @@
 
     <string name="order_summary_format">Souhrn objednávky: %1$s</string>
     <string name="order_item_separator">"; "</string>
+
+    <string name="item_with_price">%1$s — %2$s</string>
+    <string name="total_price_label">Celková cena</string>
+    <string name="total_price_format">Celkem: %1$s</string>
+    <string name="order_summary_with_total">Souhrn objednávky:\n%1$s\n\nCelkem: %2$s</string>
+    <string name="order_line_separator">"\n"</string>
 </resources>
