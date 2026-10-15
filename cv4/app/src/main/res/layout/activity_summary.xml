@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SummaryActivity">
+
+    <!-- POSOUVATELNÝ OBSAH -->
+    <ScrollView
+        android:id="@+id/scrollSummary"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnBack"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="24dp">
+
+            <!-- NADPIS -->
+            <TextView
+                android:id="@+id/tvSummaryHeader"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Rekapitulace objednávky"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <!-- VYBRANÉ BOTY -->
+            <TextView
+                android:id="@+id/tvSelectedShoes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:text="Vybrané boty:"
+                android:textSize="20sp"
+                app:layout_constraintTop_toBottomOf="@id/tvSummaryHeader"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <!-- DOPLŇKY -->
+            <TextView
+                android:id="@+id/tvExtras"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Příplatková výbava: žádná"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/tvSelectedShoes"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <!-- CELKOVÁ CENA -->
+            <TextView
+                android:id="@+id/tvFinalPrice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:padding="20dp"
+                android:gravity="center"
+                android:background="#FFF3E0"
+                android:text="Celkem: 0 Kč"
+                android:textColor="#212121"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/tvExtras"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <!-- OBCHODNÍ PODMÍNKY -->
+            <TextView
+                android:id="@+id/tvTermsTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:text="Obchodní podmínky"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/tvFinalPrice"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/tvTermsText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textSize="14sp"
+                android:lineSpacingExtra="5dp"
+                android:text="1. ÚVODNÍ USTANOVENÍ&#10;Tyto podmínky slouží jako ukázkový text pro demonstraci posouvání obsahu v aplikaci. Nejedná se o skutečnou kupní smlouvu.&#10;&#10;2. OBJEDNÁVKA ZBOŽÍ&#10;Uživatel si může vybrat jeden ze tří modelů běžeckých bot On a k objednávce přidat volitelné doplňky.&#10;&#10;3. CENA OBJEDNÁVKY&#10;Celková cena se vypočítává automaticky podle zvoleného modelu bot a vybraných doplňků.&#10;&#10;4. POTVRZENÍ OBJEDNÁVKY&#10;Po stisknutí tlačítka Objednat se zobrazí rekapitulace objednávky. Aplikace slouží pouze jako školní projekt a skutečnou objednávku neodesílá.&#10;&#10;5. ZMĚNA OBJEDNÁVKY&#10;Uživatel se může kdykoliv vrátit na předchozí obrazovku pomocí tlačítka Zpět k úpravě. Vybrané možnosti zůstanou zachovány.&#10;&#10;6. OCHRANA ÚDAJŮ&#10;Aplikace nepředává objednávku žádnému externímu systému. Informace o vybraném zboží se předávají mezi obrazovkami pomocí Intentu.&#10;&#10;7. ZÁVĚREČNÁ USTANOVENÍ&#10;Tento text je určen výhradně pro studijní účely v rámci předmětu Programování mobilních aplikací. Demonstruje použití ScrollView a práci s delším textovým obsahem."
+                app:layout_constraintTop_toBottomOf="@id/tvTermsTitle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <!-- TLAČÍTKO ZPĚT -->
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        android:text="Zpět k úpravě"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        app:backgroundTint="#FF9800"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
