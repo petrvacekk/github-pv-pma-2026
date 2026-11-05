@@ -1,59 +1,119 @@
 package com.example.myapp008bdatastore
 
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
+import android.widget.Toast
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import com.example.myapp008bdatastore.databinding.FragmentSettingsBinding
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+val Context.dataStore by preferencesDataStore(name = "gamer_profile")
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SettingsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SettingsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    private var _binding: FragmentSettingsBinding? = null
+    private val binding get() = _binding!!
+
+    private val NICKNAME_KEY = stringPreferencesKey("NICKNAME")
+    private val HARDCORE_KEY = booleanPreferencesKey("HARDCORE")
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Načtení uložených dat
+        viewLifecycleOwner.lifecycleScope.launch {
+            val preferences = requireContext().dataStore.data.first()
+            binding.etNickname.setText(preferences[NICKNAME_KEY] ?: "")
+            binding.switchHardcoreMode.isChecked =
+                preferences[HARDCORE_KEY] ?: false
+        }
+
+        // NOVINKA: Interaktivní posuvník
+        // Funguje nezávisle na ukládání dat
+        binding.seekBarBrightness.setOnSeekBarChangeListener(
+            object : SeekBar.OnSeekBarChangeListener {
+
+                override fun onProgressChanged(
+                    seekBar: SeekBar?,
+                    progress: Int,
+                    fromUser: Boolean
+                ) {
+                    binding.tvBrightness.text =
+                        "Jas herního prostředí: $progress %"
+                }
+
+                override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+
+                override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+            }
+        )
+
+        // Uložení dat
+        binding.btnSave.setOnClickListener {
+
+            val currentName = binding.etNickname.text.toString()
+            val currentHardcore = binding.switchHardcoreMode.isChecked
+
+            viewLifecycleOwner.lifecycleScope.launch {
+
+                // Zobrazení načítacího kolečka
+                binding.progressBar.visibility = View.VISIBLE
+                binding.btnSave.isEnabled = false
+
+                // Simulace třísekundového ukládání
+                // delay() neblokuje hlavní vlákno
+                delay(3000)
+
+                // Uložení do DataStore
+                requireContext().dataStore.edit { prefs ->
+                    prefs[NICKNAME_KEY] = currentName
+                    prefs[HARDCORE_KEY] = currentHardcore
+                }
+
+                // Dokončení ukládání
+                binding.progressBar.visibility = View.INVISIBLE
+                binding.btnSave.isEnabled = true
+
+                Snackbar.make(
+                    binding.root,
+                    "Uloženo moderní cestou",
+                    Snackbar.LENGTH_LONG
+                )
+                    .setAction("Zpět") {
+                        Toast.makeText(
+                            requireContext(),
+                            "Akce vrácena zpět!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    .show()
+            }
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SettingsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SettingsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
