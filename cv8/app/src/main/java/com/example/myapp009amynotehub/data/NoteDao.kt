@@ -7,7 +7,6 @@ import androidx.room.Query
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
-
 @Dao
 interface NoteDao {
 
@@ -18,6 +17,16 @@ interface NoteDao {
     // READ - Načte všechny poznámky a vrátí je jako Flow, které umožňuje pozorování změn
     @Query("SELECT * FROM note_table ORDER BY id DESC")
     fun getAllNotes(): Flow<List<Note>>
+
+    // SEARCH - Vyhledává v titulku nebo obsahu poznámky
+    @Query("""
+        SELECT * 
+        FROM note_table 
+        WHERE title LIKE '%' || :search || '%' 
+           OR content LIKE '%' || :search || '%'
+        ORDER BY id DESC
+    """)
+    fun searchNotes(search: String): Flow<List<Note>>
 
     // UPDATE - Aktualizuje existující poznámku
     @Update

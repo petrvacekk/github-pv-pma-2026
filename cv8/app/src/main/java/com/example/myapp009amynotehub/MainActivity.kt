@@ -2,6 +2,7 @@ package com.example.myapp009amynotehub
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.SearchView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +15,7 @@ import com.example.myapp009amynotehub.data.NoteDao
 import com.example.myapp009amynotehub.data.NoteHubDatabaseInstance
 import com.example.myapp009amynotehub.databinding.ActivityMainBinding
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -29,6 +31,8 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val searchQuery = MutableStateFlow("")
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -60,10 +64,31 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerViewNotes.layoutManager = LinearLayoutManager(this)
         binding.recyclerViewNotes.adapter = adapter
 
-        // Flow
+        // --- Vyhledávání v poznámkách ---
+        // Listener SearchView: změna textu → změní hodnotu Flow
+        binding.searchViewNotes.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean = false
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                searchQuery.value = newText ?: ""
+                return true
+            }
+        })
+
+        // Jeden společný collector, který reaguje na změnu textu
         lifecycleScope.launch {
-            noteDao.getAllNotes().collectLatest { notes ->
-                adapter.submitList(notes)
+            searchQuery.collectLatest { text ->
+                if (text.isEmpty()) {
+                    // Zobrazit všechny poznámky
+                    noteDao.getAllNotes().collectLatest { notes ->
+                        adapter.submitList(notes)
+                    }
+                } else {
+                    // Zobrazit filtrované poznámky
+                    noteDao.searchNotes(text).collectLatest { notes ->
+                        adapter.submitList(notes)
+                    }
+                }
             }
         }
     }

@@ -10,16 +10,22 @@ object NoteHubDatabaseInstance {
     @Volatile
     private var INSTANCE: NoteHubDatabase? = null
 
-    // Definuje migraci ze verze 1 na verzi 2 – přidání nového sloupce priority
+    // Migrace databáze z verze 1 na verzi 2
     private val MIGRATION_1_2 = object : Migration(1, 2) {
         override fun migrate(db: SupportSQLiteDatabase) {
-            db.execSQL("ALTER TABLE note_table ADD COLUMN priority INTEGER NOT NULL DEFAULT 1")
+            db.execSQL("ALTER TABLE note_table ADD COLUMN createdAt INTEGER NOT NULL DEFAULT 0")
+            db.execSQL("ALTER TABLE note_table ADD COLUMN category TEXT NOT NULL DEFAULT 'General'")
         }
     }
 
-    /**
-     * Vrátí instanci databáze. Pokud ještě neexistuje, vytvoří ji.
-     */
+    // Migrace databáze z verze 2 na verzi 3
+    private val MIGRATION_2_3 = object : Migration(2, 3) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE note_table ADD COLUMN createdAt INTEGER NOT NULL DEFAULT 0")
+            db.execSQL("ALTER TABLE note_table ADD COLUMN category TEXT NOT NULL DEFAULT 'General'")
+        }
+    }
+
     fun getDatabase(context: Context): NoteHubDatabase {
         return INSTANCE ?: synchronized(this) {
             val instance = Room.databaseBuilder(
@@ -27,12 +33,13 @@ object NoteHubDatabaseInstance {
                 NoteHubDatabase::class.java,
                 "notehub_database"
             )
-                .addMigrations(MIGRATION_1_2)
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
                 .fallbackToDestructiveMigrationOnDowngrade(true)
+                .fallbackToDestructiveMigration(true)
                 .build()
+
             INSTANCE = instance
             instance
         }
     }
-
 }

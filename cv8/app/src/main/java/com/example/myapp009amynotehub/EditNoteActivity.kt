@@ -15,6 +15,7 @@ class EditNoteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditNoteBinding
     private lateinit var noteDao: NoteDao
     private var noteId: Int = -1
+    private var currentNoteObj: Note? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,9 +34,9 @@ class EditNoteActivity : AppCompatActivity() {
             noteDao.getAllNotes().collect { notes ->
                 val note = notes.find { it.id == noteId }
                 if (note != null) {
+                    currentNoteObj = note
                     binding.etEditTitle.setText(note.title)
                     binding.etEditContent.setText(note.content)
-                    binding.etEditPriority.setText(note.priority.toString())
                 }
             }
         }
@@ -44,13 +45,13 @@ class EditNoteActivity : AppCompatActivity() {
         binding.btnSaveChanges.setOnClickListener {
             val updatedTitle = binding.etEditTitle.text.toString()
             val updatedContent = binding.etEditContent.text.toString()
-            val updatedPriority = binding.etEditPriority.text.toString().toIntOrNull() ?: 1
 
             val updatedNote = Note(
                 id = noteId,
                 title = updatedTitle,
                 content = updatedContent,
-                priority = updatedPriority
+                createdAt = currentNoteObj?.createdAt ?: System.currentTimeMillis(),
+                category = currentNoteObj?.category ?: "General"
             )
 
             lifecycleScope.launch(Dispatchers.IO) {

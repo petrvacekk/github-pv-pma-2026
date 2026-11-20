@@ -1,14 +1,20 @@
 package com.example.myapp009amynotehub
 
+import android.R
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.myapp009amynotehub.data.Note
 import com.example.myapp009amynotehub.data.NoteHubDatabaseInstance
 import com.example.myapp009amynotehub.databinding.ActivityAddNoteBinding
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class AddNoteActivity : AppCompatActivity() {
 
@@ -23,29 +29,44 @@ class AddNoteActivity : AppCompatActivity() {
         val db = NoteHubDatabaseInstance.getDatabase(this)
         val noteDao = db.noteDao()
 
+        // Naplnění kategorií pro Spinner
+        val categories = arrayOf("Obecné", "Osobní", "Práce", "Škola")
+        val spinnerAdapter = ArrayAdapter(this, R.layout.simple_spinner_dropdown_item, categories)
+        binding.spinnerCategory.adapter = spinnerAdapter
+
+        // Formátování a zobrazení dnešního data
+        val createdAtTimestamp = System.currentTimeMillis()
+        val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
+        binding.tvCreatedDate.text = "Datum vytvoření: ${dateFormat.format(Date(createdAtTimestamp))}"
+
         binding.btnSaveNote.setOnClickListener {
             val title = binding.editTextTitle.text.toString()
             val content = binding.editTextContent.text.toString()
-            val priorityStr = binding.editTextPriority.text.toString()
-            val priority = priorityStr.toIntOrNull() ?: 1
+            val selectedCategory = binding.spinnerCategory.selectedItem?.toString() ?: "Obecné"
 
-            if (title.isEmpty() || content.isEmpty()) {
-                Toast.makeText(this, "Vyplň název i obsah", Toast.LENGTH_SHORT).show()
+            if (title.isBlank() || content.isBlank()) {
+                Toast.makeText(
+                    this,
+                    "Vyplň název i obsah",
+                    Toast.LENGTH_SHORT
+                ).show()
                 return@setOnClickListener
             }
 
-            val note = Note(title = title, content = content, priority = priority)
+            val note = Note(
+                title = title,
+                content = content,
+                createdAt = createdAtTimestamp,
+                category = selectedCategory
+            )
 
-            // Spustí korutinu na vlákně určeném pro vstupně/výstupní operace (IO),
-            // které jsou vhodné pro práci s databází, aby se nezablokovalo UI.
-            CoroutineScope(Dispatchers.IO).launch {
-                // Uložení poznámky do databáze na vlákně pro IO operace (nezablokuje UI)
-                noteDao.insert(note)
+            lifecycleScope.launch {
+                withContext(Dispatchers.IO) {
+                    noteDao.insert(note)
+                }
 
-                // Po uložení zavře tuto aktivitu a vrátí se zpět na hlavní obrazovku
                 finish()
             }
         }
-
     }
 }

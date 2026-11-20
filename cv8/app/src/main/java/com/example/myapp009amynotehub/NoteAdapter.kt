@@ -33,7 +33,7 @@ class NoteAdapter(
 
         holder.binding.tvNoteTitle.text = currentNote.title
         holder.binding.tvNoteContent.text = currentNote.content
-        holder.binding.tvNotePriority.text = "Priorita: ${currentNote.priority}"
+        holder.binding.tvNotePriority.text = "Kategorie: ${currentNote.category}"
 
         // DOPLNĚNO: Kliknutí na EDIT ikonu
         holder.binding.ivEdit.setOnClickListener {
