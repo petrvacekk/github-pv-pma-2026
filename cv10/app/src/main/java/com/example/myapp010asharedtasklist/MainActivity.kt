@@ -86,6 +86,7 @@ class MainActivity : AppCompatActivity() {
                 // Převede dokumenty z Firestore na seznam objektů Task
                 val taskList = snapshots?.toObjects(Task::class.java) ?: emptyList()
                 // Aktualizuje RecyclerView novým seznamem úkolů
+
                 adapter.submitList(taskList)
             }
     }
