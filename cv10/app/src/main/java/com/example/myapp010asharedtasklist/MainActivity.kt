@@ -87,6 +87,7 @@ class MainActivity : AppCompatActivity() {
                 val taskList = snapshots?.toObjects(Task::class.java) ?: emptyList()
                 // Aktualizuje RecyclerView novým seznamem úkolů
 
+
                 adapter.submitList(taskList)
             }
     }
